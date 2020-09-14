@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.5/vue.min.js"></script>
+  <link rel="stylesheet" href="index.css">
+  <title>tarea</title>
+</head>
+<body>
+  <div id="app">
+    <nav v-bind:class="active" v-on:click.prevent>
+      <a href="#" class="home" v-on:click="makeActive('home')">Home</a>
+      <a href="#" class="pinterest" v-on:click="makeActive('pinterest')">Pinterest</a>
+      <a href="#" class="colores" v-on:click="makeActive('colores')">Colores</a>
+      <a href="#" class="spotify" v-on:click="makeActive('contact')">Spotify</a>
+    </nav>
+    <div v-if="active == 'home'">
+      <h1>Home sweet home</h1>
+      <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX3P56PKzFc9f" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+    </div>
+    <div v-if="active == 'contact'">
+      <h1>Little Jesus</h1>
+      <iframe src="https://open.spotify.com/embed/artist/5p1ARDx76hnOXoeigLIKit" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>    </div>
+    <div v-if="active == 'colores'">
+      <form class=""v-cloak>
+        <h1>Colores</h1>
+        <ul>
+          <li v-for="service in services" v-on:click="toggleActive(service)" v-bind:class="{ 'active': service.active}">
+            {{service.name}} <span>{{service.price | currency}}</span>
+          </li>
+        </ul>
+        <div class="total">
+          Total: <span>{{total() | currency}}</span>
+        </div>
+      </form>
+      
+    </div>
+    <div v-if="active == 'pinterest'">
+      <form id="main" v-cloak>
+        <div class="bar">
+          <a class="list-icon" v-bind:class="{ 'active': layout == 'list'}" v-on:click="layout = 'list'"></a>
+          <a class="grid-icon" v-bind:class="{ 'activome': layout == 'grid'}" v-on:click="layout = 'grid'"></a>
+        </div>      
+        <ul v-if="layout == 'grid'" class="grid">
+          <li v-for="a in articles">
+            <a v-bind:href="a.url" target="_blank"><img v-bind:src="a.image.large" /></a>
+          </li>
+        </ul>
+        <ul v-if="layout == 'list'" class="list">
+          <li v-for="a in articles">
+            <a v-bind:href="a.url" target="_blank"><img v-bind:src="a.image.small" /></a>
+            <p>{{a.title}}</p>
+          </li>
+        </ul>
+      </form>      
+    </div>
+  </div>
+</body>
+<script src="index.js"></script>
+</html>
